@@ -12,6 +12,7 @@ function App() {
     document.body.style.backgroundColor = mode === 'dark' ? 'white' : '#042743';
     setmode(mode === 'dark' ? 'light' : 'dark');
     showAlert("success", `Mode changed to ${mode==='dark'? 'light' : 'dark'}`);
+    document.title = `TextUtils-${mode==='dark'? 'Light' : 'Dark'} Mode`;
   }
 
   const [alert, setalert] = useState(null);
