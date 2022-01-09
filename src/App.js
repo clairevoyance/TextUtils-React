@@ -1,9 +1,14 @@
 import React, {useState} from 'react';
 import './App.css';
 import Alert from './components/Alert';
-// import About from './components/About';
+import About from './components/About';
 import Navbar from './components/Navbar';
 import TextForm from './components/TextForm';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
 
 function App() {
   const [mode, setmode] = useState('light');
@@ -24,12 +29,23 @@ function App() {
 
   return (
     <>
-    <Navbar title='TextUtils' mode={mode} toggleMode={toggleMode}/>
-    <Alert alert={alert}/>
-    <div className="container my-3">
-      <TextForm showAlert={showAlert} heading="Enter the text to analyze below" mode={mode}/>
-      {/* <About/> */}
-    </div>
+    <Router>
+      <Navbar title='TextUtils' mode={mode} toggleMode={toggleMode}/>
+      <Alert alert={alert}/>
+      <div className="container my-3">
+        <Routes>
+          {/* Please Note!!
+
+            We are not using the "exact" keyword to specify the path. (E.g -> <Route exact path="/home" element={<Home />} />)
+            We should have used it in router version 5.x.x
+            Why? - Because in version 5.x.x, if we dont specify the exact keyword, it would consider "/home" same as "/" in terms of first cum first serve matching. But, in version 6.x.x, it would consider "/home" as a child of "/" and "/home" would not be matched. In other words, "/home" would be exactly matched even if we dont specify the "exact" keyword in version 6.x.x of react-router-dom.
+
+          */}
+        <Route path="/home" element={<TextForm showAlert={showAlert} heading="Enter the text to analyze below" mode={mode}/>} />
+        <Route path="/about" element={<About/>} />
+        </Routes>
+      </div>
+    </Router>
     </>
   );
 }
